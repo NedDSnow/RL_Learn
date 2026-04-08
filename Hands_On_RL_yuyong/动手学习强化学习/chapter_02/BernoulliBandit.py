@@ -136,7 +136,7 @@ class DecayingEpsilonGreedy(Solver):
 
 
 
-## UCB 算法的核心思想是,在选择拉杆时,不仅考虑当前的奖励估值,还要考虑不确定性。具体来说,对于每根拉杆,我们计算一个上置信界(Upper Confidence Bound, UCB),它由两部分组成:当前的奖励估值和一个不确定性项。奖励估值反映了我们对该拉杆的奖励的估计,而不确定性项则反映了我们对该拉杆的奖励估计的置信程度。UCB算法选择上置信界最大的拉杆,这样既考虑了奖励估值又考虑了不确定性,从而在探索和利用之间取得平衡。UCB算法的一个重要参数是coef,它控制了不确定性项的比重。较大的coef值会增加探索的程度,而较小的coef值则会增加利用的程度。通过调整coef值,我们可以在探索和利用之间找到一个合适的平衡点,从而提高算法的性能。
+## UCB 算法的核心思想是,在选择拉杆时,不仅考虑当前的奖励估值,还要考虑不确定性。具体来说,对于每根拉杆,我们计算一个上置信界(Upper Confidence Bound, UCB),它由两部分组成:当前的奖励估值和一个不确定性项。奖励估值反映了我们对该拉杆的奖励的估计,而不确定性项则反映了我们对该拉杆的奖励估计的置信程度。UCB算法选择上置信界最大的拉杆,这样既考虑了奖励估值又考虑了不确定性,从而在探索和利用之间取得平衡。UCB算法的一个重要参数是coef,它控制了不确定性项的比重。较大的coef值会增加探索的程度,而较小的coef值则会增加利用的程度。通过调整coef值,我们可以在探索和利用之间找到一个合适的平衡点,从而提高算法的性能。, 这里 假设 p = 1/t; coef = 1, 则 UCB算法的上置信界为: reward_estimate + sqrt(2*log(t)/n), 其中reward_estimate是当前的奖励估值,t是当前的时间步数,n是该拉杆被选择的次数。随着时间的推移,当某根拉杆被选择的次数增加时,不确定性项会逐渐减小,从而使得算法更多地利用该拉杆;而当某根拉杆被选择的次数较少时,不确定性项会较大,从而使得算法更多地探索该拉杆。这种机制使得UCB算法能够在探索和利用之间取得平衡,从而提高算法的性能。
 class UCB(Solver):
     """ UCB算法,继承Solver类 """
     def __init__(self, bandit, coef, init_prob=1.0):
@@ -168,7 +168,7 @@ class UCB(Solver):
 class ThompsonSampling(Solver):
     """ 汤普森采样算法,继承Solver类 """
     def __init__(self, bandit):
-        super(ThompsonSampling, self).__init__(bandit)
+        super(ThompsonSampling, self).__init__(bandit) # 调用父类的构造函数,初始化基本属性,他的父类是Solver,它的构造函数需要一个bandit对象作为参数,所以我们在这里传入了bandit参数
         self._a = np.ones(self.bandit.K)  # 列表,表示每根拉杆奖励为1的次数
         self._b = np.ones(self.bandit.K)  # 列表,表示每根拉杆奖励为0的次数
 
