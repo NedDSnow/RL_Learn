@@ -1,3 +1,6 @@
 {
-    "ROS2.distro": "noetic"
+    "ROS2.distro": "noetic",
+    "python.analysis.extraPaths": [
+        "./Hands_On_RL_yuyong/动手学习强化学习/chapter_11"
+    ]
 }
